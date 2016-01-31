@@ -1,0 +1,20 @@
+<% provide(:title, 'All Users') %>
+<h1>All Users</h1>
+<div class="digg_pagination">
+    <div class="page_info">
+      <%= page_entries_info @users %>
+    </div>
+    <%= will_paginate @users, :container => false %>
+</div>
+</br>
+<ul class="users">
+    <%= render @users %>
+</ul>
+</br>
+<div class="digg_pagination">
+    <div class="page_info">
+      <%= page_entries_info @users %>
+    </div>
+    <%= will_paginate @users, :container => false %>
+</div>
+</br>

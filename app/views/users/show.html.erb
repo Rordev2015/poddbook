@@ -1,0 +1,36 @@
+<%= provide(:title, @user.full_name) %>
+<div>
+    <aside class="col-md-4">
+       <section class="user_info">
+          <h1>
+            <%= gravatar_for @user%>
+            <%= @user.full_name %>
+            <%= @user.city %>
+            <%= @user.gender %>
+          </h1>
+          <% if logged_in? %>
+          <div id="friend-status">
+            <% if current_user.friends.include?(@user) || current_user.pending_friends.include?(@user) %>
+              <%= link_to "Edit Friendship", edit_user_friendship_path(friend_id: @user), class: 'btn btn-primary' %>
+            <% elsif current_user.blocked_friends.include?(@user) %>
+              <p>You have been blocked by this user. So, you can not add this user.</p>
+            <% else %>
+              <%= link_to "Add Friend", new_user_friendship_path(friend_id: @user), class: 'btn btn-primary', id: 'add-friendship', data: { friend_id: @user.id } %>
+            <% end %>
+          </div>
+          <% end %>
+       </section> 
+    </aside>
+    <% if logged_in? && !current_user.has_blocked?(@user) %>
+    <div class="col-md-8">
+       <% if @user.microposts.any? %>
+          <h3>Microposts (<%= @user.microposts.count %>)</h3>
+          <ol class="microposts">
+              <%= render @microposts %>
+          </ol>
+        <%= will_paginate @microposts %>
+        <% end %>
+    </div>
+    <% end %>
+</div>
+</div>
